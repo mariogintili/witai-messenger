@@ -1,0 +1,18 @@
+service: "witai-messenger"
+provider:
+  name: "aws"
+  runtime: "nodejs4.3"
+  profile: "personal"
+functions:
+  main:
+    handler: "handler.main"
+    environment: 
+      WIT_KEY: "${env:WIT_KEY}"
+      FACEBOOK_PAGE_ACCESS_TOKEN: "${env:FACEBOOK_PAGE_ACCESS_TOKEN}"
+    events:
+        - http:
+            path: "messages"
+            method: "post"
+        - http:
+          path: "messages"
+          method: "get"

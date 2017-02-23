@@ -1,0 +1,21 @@
+{
+  "name": "witai-messenger",
+  "version": "0.1.0",
+  "description": "My first attempt at using the serverless framework and AWS lambda",
+  "main": "handler.js",
+  "scripts": {
+    "test": "node_modules/jasmine-node/bin/jasmine-node spec/"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "n00b"
+  ],
+  "author": "Mario Gintili",
+  "license": "MIT",
+  "dependencies": {
+    "jasmine": "^2.5.3",
+    "jasmine-node": "^1.14.5",
+    "ramda": "^0.23.0"
+  }
+}
