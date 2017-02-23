@@ -1,18 +1,24 @@
-service: "witai-messenger"
+service: witai-messenger
 provider:
-  name: "aws"
-  runtime: "nodejs4.3"
-  profile: "personal"
+  name: aws
+  runtime: nodejs4.3
+  profile: personal
+  environment: 
+    WIT_KEY: ${env:WIT_KEY}
+    FACEBOOK_PAGE_ACCESS_TOKEN: ${env:FACEBOOK_PAGE_ACCESS_TOKEN}
+    FACEBOOK_PAGE_VERIFY_TOKEN: ${env:FACEBOOK_PAGE_VERIFY_TOKEN}
 functions:
-  main:
-    handler: "handler.main"
-    environment: 
-      WIT_KEY: "${env:WIT_KEY}"
-      FACEBOOK_PAGE_ACCESS_TOKEN: "${env:FACEBOOK_PAGE_ACCESS_TOKEN}"
+  webhook:
+    handler: handler.webhook
     events:
         - http:
-            path: "messages"
-            method: "post"
+            path: messages
+            method: post
+            integration: lambda-proxy
+  verify:
+    handler: handler.verify
+    events:
         - http:
-          path: "messages"
-          method: "get"
+            path: verify
+            method: get
+            integration: lambda-proxy

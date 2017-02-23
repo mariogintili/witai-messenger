@@ -1,10 +1,9 @@
 const R = require('ramda');
-const VERIFY_TOKEN = null;
+const VERIFY_TOKEN = process.env.FACEBOOK_PAGE_VERIFY_TOKEN;
 
-const isGet            = (event) => event.method === 'GET';
-const isSubscribe      = (event) => event.query['hub.mode'] === 'subscribe';
-const isTokenValid     = (event) => event.query['hub.verify_token'] === VERIFY_TOKEN;
-
+const isGet            = (event) => event.httpMethod === 'GET';
+const isSubscribe      = (event) => event.queryStringParameters['hub.mode'] === 'subscribe';
+const isTokenValid     = (event) => event.queryStringParameters['hub.verify_token'] === VERIFY_TOKEN;
 const isVeryfyingToken = R.allPass([isGet, isSubscribe, isTokenValid]);
 
 const writeToken = (query) => {
@@ -16,9 +15,19 @@ const writeToken = (query) => {
   };
 };
 
-module.exports.main = (event, context, callback) => {
+const clientError = (callback) => {
+  return callback(null, {
+    statusCode: 400,
+    body: null
+  });
+};
+
+module.exports.verify = (event, context, callback) => {
   if (isVeryfyingToken(event)) {
-    return writeToken(event.query)(callback);
+    writeToken(event.queryStringParameters)(callback);
+  } else {
+    clientError(callback);
   }
 };
 
+module.exports.webhook = (event, context, callback) => {};

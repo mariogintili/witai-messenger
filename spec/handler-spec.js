@@ -1,6 +1,6 @@
 const handler = require('../handler');
 
-describe('handler.main', function() {
+describe('handler.verify', function() {
   describe('when is a GET and its a verify request', function() {
     it('returns the challenge on the body of the response with a status code of 200', function() {
       const challenge = '7b77691171fe47454a42';
@@ -10,10 +10,10 @@ describe('handler.main', function() {
           headers: {
             'Content-Type': 'application/json'
           },
-          method: 'GET',
-          query: {
+          httpMethod: 'GET',
+          queryStringParameters: {
             'hub.mode': 'subscribe',
-            'hub.verify_token': null,
+            'hub.verify_token': process.env.FACEBOOK_PAGE_VERIFY_TOKEN,
             'hub.challenge': challenge
           }
         },
@@ -23,7 +23,7 @@ describe('handler.main', function() {
           expect(response.body).toEqual(challenge);
         }
       };
-      handler.main(options.event, {}, options.callback);
+      handler.verify(options.event, {}, options.callback);
     });
   });
 });
