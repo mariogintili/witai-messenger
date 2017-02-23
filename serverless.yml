@@ -19,6 +19,6 @@ functions:
     handler: handler.verify
     events:
         - http:
-            path: verify
+            path: messages
             method: get
             integration: lambda-proxy
