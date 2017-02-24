@@ -27,3 +27,10 @@ describe('handler.verify', function() {
     });
   });
 });
+
+xdescribe('handler.webhook', function() {
+  xdescribe('when is a POST and its an incoming webhook', function() {
+    xit('parses the text and executes an action', function() {
+    });
+  });
+});

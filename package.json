@@ -16,6 +16,7 @@
   "dependencies": {
     "jasmine": "^2.5.3",
     "jasmine-node": "^1.14.5",
-    "ramda": "^0.23.0"
+    "ramda": "^0.23.0",
+    "smooch-core": "^3.3.0"
   }
 }
