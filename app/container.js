@@ -6,11 +6,11 @@ function Container() {
 
 Container.prototype.register = function(key, value, options) {
   let args = (options || {});
-
-  if ((this.repository[key] !== undefined) && (options.allowOverwrite !== true)) {
+  if ((this.repository[key] !== undefined) && (args.allowOverwrite !== true)) {
+    console.log(arguments);
     throw new Error(`Duplicate declaration of ${key} found`);
   } else {
-    this.repository[key] = { value: value, instantiate: args.instantiate };
+    this.repository[key] = { service: value, instantiate: args.instantiate };
     return value;
   }
 };
@@ -20,7 +20,7 @@ Container.prototype.fetch = function(key, fn) {
   const ifNotFound = (fn ? fn : (label) => { throw new Error(`Could not find ${label}`)});
 
   if (value) {
-    return (value.instantiate ? new value() : value);
+    return (value.instantiate ? new value.service() : value.service);
   } else {
     ifNotFound(key);
   }

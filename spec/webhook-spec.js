@@ -34,34 +34,45 @@ describe('webhook.understandMessage', function() {
         }
       };
 
-      const client       = container.get('httpClient');
+      const client       = container.fetch('httpClient');
       const mockedClient = (options, callback) => {
         expect(options.method).toEqual('POST');
         expect(options.url).toEqual('https://api.wit.ai/');
         expect(options.headers).toEqual({
           'Authorization': `Bearer ${config.wit.token}`,
           'Content-Type': 'application/json',
-          'Accept': 'application/vnd.wit.20160526+json'
+          'Accept': config.wit.version
         });
         expect(options.qs).toEqual({ q: text });
 
         callback(null, { statusCode: 200 }, JSON.stringify(payload));
       };
 
-      container.register('httpClient', mockedClient);
+      container.register('httpClient', mockedClient, { allowOverwrite: true });
 
-      const result = fn((body) => {
-        return body;
+      fn((body) => {
+        expect(body.confidence).toBe(payload.confidence);
+        expect(body.type).toBe(payload.type);
       });
 
-
-      container.register('httpClient', client);
+      container.register('httpClient', client, { allowOverwrite: true });
     });
   });
 
   describe('under invalid circumstances', function() {
-    it('when the HTTP request fails', function() {
+    it('throws an error', function() {
+      const text    = 'Hello world';
+      const fn      = webhook.understandMessage({ text: text });
+      const client  = container.fetch('httpClient');
 
+      const error = new Error('Whoops!');
+      const mockedClient = (_, callback) => {
+        callback(error, { statusCode: 403 }, null);
+      };
+
+      container.register('httpClient', mockedClient, { allowOverwrite: true });
+      expect(fn).toThrow(error);
+      container.register('httpClient', client, { allowOverwrite: true });
     });
   });
 });
