@@ -4,7 +4,7 @@
   "description": "My first attempt at using the serverless framework and AWS lambda",
   "main": "handler.js",
   "scripts": {
-    "test": "node_modules/jasmine-node/bin/jasmine-node spec/"
+    "test": "NODE_ENV=test node_modules/jasmine-node/bin/jasmine-node spec/"
   },
   "keywords": [
     "ai",
@@ -17,6 +17,7 @@
     "jasmine": "^2.5.3",
     "jasmine-node": "^1.14.5",
     "ramda": "^0.23.0",
+    "request": "^2.79.0",
     "smooch-core": "^3.3.0"
   }
 }

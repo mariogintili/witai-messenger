@@ -1,3 +1,5 @@
+'use strict';
+
 const R                = require('ramda');
 const Xhttp            = require('./app/http');
 const isVeryfyingToken = R.allPass([

@@ -7,6 +7,7 @@ provider:
     WIT_KEY: ${env:WIT_KEY}
     FACEBOOK_PAGE_ACCESS_TOKEN: ${env:FACEBOOK_PAGE_ACCESS_TOKEN}
     FACEBOOK_PAGE_VERIFY_TOKEN: ${env:FACEBOOK_PAGE_VERIFY_TOKEN}
+    NODE_ENV: ${env:NODE_ENV}
 functions:
   webhook:
     handler: handler.webhook

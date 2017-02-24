@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = JSON.stringify({
   "trigger": "message:appUser",
   "app": {
     "_id": "58ad5d628d4773f100eacb1d"
@@ -53,4 +53,4 @@ module.exports = {
     "pendingClients": [],
     "properties": {}
   }
-};
+});
